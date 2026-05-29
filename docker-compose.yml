@@ -1,0 +1,75 @@
+version: "3.9"
+
+services:
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  auth-service:
+    build: ./services/auth-service
+
+    ports:
+      - "3001:3001"
+
+    env_file:
+      - ./services/auth-service/.env
+
+    depends_on:
+      - mongo
+
+  employee-service:
+    build: ./services/employee-service
+
+    ports:
+      - "3002:3002"
+
+    env_file:
+      - ./services/employee-service/.env
+
+    depends_on:
+      - mongo
+
+  leave-service:
+    build: ./services/leave-service
+
+    ports:
+      - "3003:3003"
+
+    env_file:
+      - ./services/leave-service/.env
+
+    depends_on:
+      - mongo
+      - rabbitmq
+      - employee-service
+
+  notification-service:
+    build: ./services/notification-service
+
+    env_file:
+      - ./services/notification-service/.env
+
+    depends_on:
+      - rabbitmq
+
+  gateway:
+    build: ./gateway
+
+    ports:
+      - "8080:8080"
+
+    env_file:
+      - ./gateway/.env
+
+    depends_on:
+      - auth-service
+      - employee-service
+      - leave-service
