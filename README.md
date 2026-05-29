@@ -17,6 +17,14 @@ A backend-based Leave Management System built using Node.js microservices archit
 - Centralized Error Handling
 - Health Check Endpoints
 
+## Project Demo
+
+- Google Drive: https://drive.google.com/file/d/1tJU7GTE0UE9P9Kt-xf_xDdbYQrUCwWzK/view?usp=drive_link
+
+## Source Code
+
+- Github: https://github.com/Soumik-Sarkar/leave-management-system
+
 ## Architecture Diagram
 
 ```text
